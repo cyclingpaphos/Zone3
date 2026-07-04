@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyprus Tour — Roadbook</title>
+<style>
+  :root{
+    --limewash:#F2EFE6;
+    --ink:#1F2A24;
+    --aegean:#1C5D6B;
+    --sun:#D9A441;
+    --olive:#6B7A4F;
+    --stone:#C9C0AA;
+    --paper:#FBF9F3;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0;
+    background:var(--limewash);
+    color:var(--ink);
+    font-family:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .mono{
+    font-family:'SF Mono','JetBrains Mono',Consolas,Menlo,monospace;
+    letter-spacing:0.02em;
+  }
+
+  a{ color:var(--aegean); }
+
+  /* ===== HEADER ===== */
+  header{
+    position:relative;
+    padding:64px 24px 48px;
+    text-align:center;
+    background:
+      linear-gradient(180deg, rgba(28,93,107,0.06), transparent 60%),
+      var(--paper);
+    border-bottom:1px solid var(--stone);
+    overflow:hidden;
+  }
+
+  .eyebrow{
+    font-family:'SF Mono','JetBrains Mono',Consolas,monospace;
+    text-transform:uppercase;
+    letter-spacing:0.28em;
+    font-size:12px;
+    color:var(--aegean);
+    margin-bottom:14px;
+  }
+
+  h1{
+    font-size:clamp(34px,6vw,58px);
+    margin:0 0 10px;
+    font-weight:600;
+    letter-spacing:-0.01em;
+  }
+
+  header p.sub{
+    margin:0;
+    color:#54604f;
+    font-size:17px;
+  }
+
+  .route-line{
+    display:block;
+    margin:36px auto 0;
+    max-width:640px;
+    width:100%;
+    height:auto;
+  }
+
+  /* ===== SECTION WRAP ===== */
+  main{
+    max-width:760px;
+    margin:0 auto;
+    padding:0 20px 90px;
+  }
+
+  section{
+    margin-top:52px;
+  }
+
+  .section-label{
+    font-family:'SF Mono','JetBrains Mono',Consolas,monospace;
+    text-transform:uppercase;
+    font-size:12px;
+    letter-spacing:0.22em;
+    color:var(--olive);
+    margin-bottom:16px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .section-label::after{
+    content:"";
+    flex:1;
+    height:1px;
+    background:var(--stone);
+  }
+
+  /* ===== MUSTER CARD ===== */
+  .muster{
+    background:var(--paper);
+    border:1px solid var(--stone);
+    border-radius:4px;
+    padding:28px 28px 24px;
+  }
+
+  .muster-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px 24px;
+  }
+  @media (max-width:520px){
+    .muster-grid{ grid-template-columns:1fr; }
+  }
+
+  .field-label{
+    font-family:'SF Mono','JetBrains Mono',Consolas,monospace;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.14em;
+    color:#8b8570;
+    margin-bottom:4px;
+  }
+  .field-value{
+    font-size:17px;
+  }
+  .field-value.time{
+    font-family:'SF Mono','JetBrains Mono',Consolas,monospace;
+    font-size:20px;
+    color:var(--aegean);
+    font-weight:600;
+  }
+
+  .divider-thin{
+    height:1px;
+    background:var(--stone);
+    margin:22px 0;
+    border:none;
+  }
+
+  .contacts{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .contact-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    font-size:15.5px;
+    flex-wrap:wrap;
+    gap:6px;
+  }
+  .contact-row .who{ color:#54604f; }
+  .contact-row .num{
+    font-family:'SF Mono','JetBrains Mono',Consolas,monospace;
+    color:var(--ink);
+    font-weight:600;
+  }
+  .tbc{
+    color:#a99a6b;
+    font-style:italic;
+  }
+
+  /* ===== DAY CARDS ===== */
+  .day{
+    position:relative;
+    border:1px solid var(--stone);
+    background:var(--paper);
+    border-radius:4px;
+    padding:26px 28px 24px;
+    margin-bottom:22px;
+  }
+
+  .day-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:16px;
+    margin-bottom:18px;
+    flex-wrap:wrap;
+  }
+
+  .day-num{
+    font-family:'SF Mono','JetBrains Mono',Consolas,monospace;
+    font-size:13px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--sun);
+    background:rgba(217,164,65,0.14);
+    padding:4px 10px;
+    border-radius:20px;
+  }
+
+  .day-return{
+    font-family:'SF Mono','JetBrains Mono',Consolas,monospace;
+    font-size:13px;
+    color:#8b8570;
+  }
+
+  .groups{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+  }
+  .groups.single{
+    grid-template-columns:1fr;
+  }
+  @media (max-width:520px){
+    .groups{ grid-template-columns:1fr; }
+  }
+
+  .group-block{
+    border-left:3px solid var(--aegean);
+    padding-left:14px;
+  }
+  .group-block.g2{
+    border-left-color:var(--olive);
+  }
+  .group-name{
+    font-family:'SF Mono','JetBrains Mono',Consolas,monospace;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.12em;
+    color:#8b8570;
+    margin-bottom:3px;
+  }
+  .destination{
+    font-size:19px;
+    font-weight:600;
+  }
+
+  /* ===== GPX / FILES ===== */
+  .files-list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .file-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border:1px solid var(--stone);
+    background:var(--paper);
+    border-radius:4px;
+    padding:14px 18px;
+  }
+  .file-row .name{
+    font-size:15.5px;
+  }
+  .file-row .name .tag{
+    font-family:'SF Mono','JetBrains Mono',Consolas,monospace;
+    font-size:11px;
+    color:var(--olive);
+    margin-right:8px;
+  }
+  .download-link{
+    font-family:'SF Mono','JetBrains Mono',Consolas,monospace;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    text-decoration:none;
+    color:var(--aegean);
+    border:1px solid var(--aegean);
+    padding:6px 12px;
+    border-radius:20px;
+    white-space:nowrap;
+  }
+  .download-link:hover{
+    background:var(--aegean);
+    color:var(--paper);
+  }
+  .placeholder-note{
+    font-size:14px;
+    color:#a99a6b;
+    font-style:italic;
+    margin-top:6px;
+  }
+
+  footer{
+    text-align:center;
+    padding:32px 20px 48px;
+    color:#8b8570;
+    font-size:13px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Guided Cycling Tour · Cyprus</div>
+  <h1>Tour Roadbook</h1>
+  <p class="sub">Zone 3 Triathlon group — three days on the road</p>
+
+  <svg class="route-line" viewBox="0 0 640 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M0 40 C 60 10, 100 55, 160 30 S 260 5, 320 35 S 420 55, 480 20 S 580 45, 640 25"
+          stroke="#1C5D6B" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="0" cy="40" r="4" fill="#D9A441"/>
+    <circle cx="320" cy="35" r="4" fill="#D9A441"/>
+    <circle cx="640" cy="25" r="4" fill="#D9A441"/>
+  </svg>
+</header>
+
+<main>
+
+  <!-- MUSTER / LOGISTICS -->
+  <section id="muster">
+    <div class="section-label">Muster</div>
+    <div class="muster">
+      <div class="muster-grid">
+        <div>
+          <div class="field-label">Hotel</div>
+          <div class="field-value">Zone 3 Triathlon group</div>
+        </div>
+        <div>
+          <div class="field-label">Guides &amp; support cars in place</div>
+          <div class="field-value time">05:30</div>
+        </div>
+        <div>
+          <div class="field-label">Assemble from</div>
+          <div class="field-value time">05:40</div>
+        </div>
+        <div>
+          <div class="field-label">Group 1 start</div>
+          <div class="field-value time">05:45</div>
+        </div>
+        <div>
+          <div class="field-label">Group 2 start</div>
+          <div class="field-value time">05:50</div>
+        </div>
+      </div>
+
+      <hr class="divider-thin">
+
+      <div class="field-label" style="margin-bottom:12px;">Useful numbers</div>
+      <div class="contacts">
+        <div class="contact-row">
+          <span class="who">Ian — Lead Guide (Group 1)</span>
+          <span class="num">99 39 45 52</span>
+        </div>
+        <div class="contact-row">
+          <span class="who">Nik — Group 2 Guide</span>
+          <span class="num tbc">TBC</span>
+        </div>
+        <div class="contact-row">
+          <span class="who">Support Cars</span>
+          <span class="num tbc">TBC</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DAY BY DAY -->
+  <section id="itinerary">
+    <div class="section-label">Itinerary</div>
+
+    <div class="day">
+      <div class="day-head">
+        <span class="day-num">Day 1</span>
+        <span class="day-return">Approx. return 11:30</span>
+      </div>
+      <div class="groups">
+        <div class="group-block g1">
+          <div class="group-name">Group 1</div>
+          <div class="destination">Kolossi Castle</div>
+        </div>
+        <div class="group-block g2">
+          <div class="group-name">Group 2</div>
+          <div class="destination">Kourion</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day">
+      <div class="day-head">
+        <span class="day-num">Day 2</span>
+        <span class="day-return">Approx. return 12:00</span>
+      </div>
+      <div class="groups">
+        <div class="group-block g1">
+          <div class="group-name">Group 1</div>
+          <div class="destination">Pomos Harbour</div>
+        </div>
+        <div class="group-block g2">
+          <div class="group-name">Group 2</div>
+          <div class="destination">Argaka</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day">
+      <div class="day-head">
+        <span class="day-num">Day 3</span>
+        <span class="day-return">Approx. return 12:00</span>
+      </div>
+      <div class="groups single">
+        <div class="group-block g1">
+          <div class="group-name">Both groups</div>
+          <div class="destination">Omodos</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROUTE FILES -->
+  <section id="files">
+    <div class="section-label">Route Files</div>
+    <div class="files-list">
+      <div class="file-row">
+        <span class="name"><span class="tag">GPX</span>Day 1 — Kolossi Castle</span>
+        <a class="download-link" href="Paphos_-_Kolossi_Castle_-_Group_1_-_Day_1.gpx" download>Download</a>
+      </div>
+      <div class="file-row">
+        <span class="name"><span class="tag">GPX</span>Day 1 — Kourion</span>
+        <a class="download-link" href="#" aria-disabled="true">Coming soon</a>
+      </div>
+      <div class="file-row">
+        <span class="name"><span class="tag">GPX</span>Day 2 — Pomos Harbour</span>
+        <a class="download-link" href="Paphos_-_Pomos_-_Group_1_-_Day_2.gpx" download>Download</a>
+      </div>
+      <div class="file-row">
+        <span class="name"><span class="tag">GPX</span>Day 2 — Argaka</span>
+        <a class="download-link" href="#" aria-disabled="true">Coming soon</a>
+      </div>
+      <div class="file-row">
+        <span class="name"><span class="tag">GPX</span>Day 3 — Omodos</span>
+        <a class="download-link" href="Omodos_-_Geopark_-_Group_1_-_Day_3.gpx" download>Download</a>
+      </div>
+    </div>
+    <p class="placeholder-note">Remaining GPX files (Kourion, Argaka) to be added — links will go live once uploaded.</p>
+  </section>
+
+</main>
+
+<footer>
+  This page is for tour participants only and will come down after the trip.
+</footer>
+
+</body>
+</html>
